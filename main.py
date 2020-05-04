@@ -2,7 +2,7 @@ from logic import *
 
 def main():
     p = Atom("Está chovendo")
-    q = Atom("A rua está molhendo")
+    q = Atom("A rua está molhado")
     p.value = True
     q.value = False
     p_and_q = THEN(p, q)
