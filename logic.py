@@ -1,3 +1,9 @@
+'''
+Project: Implementações da cadeira de lógica para Ciência da Computação
+@author: João Victor
+Created: 25/04/2020
+'''
+
 from logic_utils import *
 
 ''' Atom and Conectors'''
@@ -147,6 +153,7 @@ class AND(Formula):
         if self.__right.value == None or self.__left.value == None:
             return 'O valor de algum átomo não foi setado'
         return self.__right.value and self.__left.value
+
     @value.setter
     def value(self, value):
         print("Não é possivel alterar o valor lógico desta fórmula!")

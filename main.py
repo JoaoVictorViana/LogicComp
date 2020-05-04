@@ -1,3 +1,9 @@
+'''
+Project: Implementações da cadeira de lógica para Ciência da Computação
+@author: João Victor
+Created: 25/04/2020
+'''
+
 from logic import *
 
 def main():
