@@ -130,29 +130,29 @@ class AND(Formula):
 
     __slots__ = ['__right', '__left']
 
-    def __init__(self, right:Formula, left:Formula):
-        Utils.verified_propositions(right)
+    def __init__(self, left:Formula, right:Formula):
         Utils.verified_propositions(left)
-        self.__right = right
+        Utils.verified_propositions(right)
         self.__left = left 
+        self.__right = right
 
     def __str__(self):
         return "{} e {}".format(
-            self.__right,
-            str(self.__left).lower()
+            self.__left,
+            str(self.__right).lower()
         )
 
     def __repr__(self):
         return "({} ^ {})".format(
-            repr(self.__right),
-            repr(self.__left)
+            repr(self.__left),
+            repr(self.__right)
         )
 
     @property
     def value(self): 
-        if self.__right.value == None or self.__left.value == None:
+        if self.__left.value == None or self.__right.value == None:
             return 'O valor de algum átomo não foi setado'
-        return self.__right.value and self.__left.value
+        return self.__left.value and self.__right.value
 
     @value.setter
     def value(self, value):
@@ -164,7 +164,7 @@ class AND(Formula):
 
     @property
     def length(self):
-        return self.__right.length + self.__left.length + 1
+        return self.__left.length + self.__right.length + 1
 
     @length.setter
     def length(self, length):
@@ -176,8 +176,8 @@ class AND(Formula):
 
     @property
     def sub_formula(self):
-        set_of_formulas = list(self.__right.sub_formula)
-        set_of_formulas += self.__left.sub_formula
+        set_of_formulas = list(self.__left.sub_formula)
+        set_of_formulas += self.__right.sub_formula
         set_of_formulas.append(repr(self))
         return sorted(set(set_of_formulas))
 
@@ -192,31 +192,31 @@ class AND(Formula):
 
 class OR(Formula):
 
-    __slots__ = ['__right', '__left']
+    __slots__ = ['__left', '__right']
 
-    def __init__(self, right:Formula, left:Formula):
-        Utils.verified_propositions(right)
+    def __init__(self, left:Formula, right:Formula):
         Utils.verified_propositions(left)
-        self.__right = right
+        Utils.verified_propositions(right)
         self.__left = left 
+        self.__right = right
 
     def __str__(self):
         return "{} ou {}".format(
-            self.__right,
-            str(self.__left).lower()
+            self.__left,
+            str(self.__right).lower()
         )
 
     def __repr__(self):
         return "({} v {})".format(
-            repr(self.__right),
-            repr(self.__left)
+            repr(self.__left),
+            repr(self.__right)
         )
 
     @property
     def value(self): 
-        if self.__right.value == None or self.__left.value == None:
+        if self.__left.value == None or self.__right.value == None:
             return 'O valor de algum átomo não foi setado'
-        return self.__right.value or self.__left.value
+        return self.__left.value or self.__right.value
 
     @value.setter
     def value(self, value):
@@ -228,7 +228,7 @@ class OR(Formula):
 
     @property
     def length(self):
-        return self.__right.length + self.__left.length + 1
+        return self.__left.length + self.__right.length + 1
 
     @length.setter
     def length(self, length):
@@ -240,8 +240,8 @@ class OR(Formula):
 
     @property
     def sub_formula(self):
-        set_of_formulas = list(self.__right.sub_formula)
-        set_of_formulas += self.__left.sub_formula
+        set_of_formulas = list(self.__left.sub_formula)
+        set_of_formulas += self.__right.sub_formula
         set_of_formulas.append(repr(self))
         return sorted(set(set_of_formulas))
 
@@ -255,31 +255,31 @@ class OR(Formula):
 
 class THEN(Formula):
 
-    __slots__ = ['__right', '__left']
+    __slots__ = ['__left', '__right']
 
-    def __init__(self, right:Formula, left:Formula):
-        Utils.verified_propositions(right)
+    def __init__(self, left:Formula, right:Formula):
         Utils.verified_propositions(left)
-        self.__right = right
+        Utils.verified_propositions(right)
         self.__left = left 
+        self.__right = right
 
     def __str__(self):
         return "{} então {}".format(
-            self.__right,
-            str(self.__left).lower()
+            self.__left,
+            str(self.__right).lower()
         )
 
     def __repr__(self):
         return "({} -> {})".format(
-            repr(self.__right),
-            repr(self.__left)
+            repr(self.__left),
+            repr(self.__right)
         )
 
     @property
     def value(self): 
-        if self.__right.value == None or self.__left.value == None:
+        if self.__left.value == None or self.__right.value == None:
             return 'O valor de algum átomo não foi setado'
-        if self.__right.value and not self.__left.value:
+        if self.__left.value and not self.__right.value:
             return False 
         else:
             return True
@@ -294,7 +294,7 @@ class THEN(Formula):
 
     @property
     def length(self):
-        return self.__right.length + self.__left.length + 1
+        return self.__left.length + self.__right.length + 1
 
     @length.setter
     def length(self, length):
@@ -306,8 +306,8 @@ class THEN(Formula):
 
     @property
     def sub_formula(self):
-        set_of_formulas = list(self.__right.sub_formula)
-        set_of_formulas += self.__left.sub_formula
+        set_of_formulas = list(self.__left.sub_formula)
+        set_of_formulas += self.__right.sub_formula
         set_of_formulas.append(repr(self))
         return sorted(set(set_of_formulas))
 
