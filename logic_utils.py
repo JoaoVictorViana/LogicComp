@@ -12,7 +12,7 @@ class Utils:
 
     @staticmethod
     def repr_of_atom():
-        if Utils.count_of_repr == 4:
+        if Utils.count_of_repr == len(Utils.set_of_repr):
             Utils.set_of_repr += Utils.increment_set_repr(Utils.set_of_repr)  
         Utils.count_of_repr += 1     
         return Utils.set_of_repr[Utils.count_of_repr - 1]
