@@ -14,7 +14,6 @@ def truth_table_generator(formula):
     atoms = []
     formulas = []
     truth_table = collections.OrderedDict()
-    print(formula.sub_formula)
     for sub_formula in formula.sub_formula:
         if isinstance(sub_formula, Atom):
             atoms.append(sub_formula)
@@ -35,7 +34,7 @@ def truth_table_generator(formula):
     for formula in formulas:
         truth_table[repr(formula)] = _generate_values_of_formula_(formula, num_rows, atoms, truth_table)
 
-    print(truth_table)
+    return truth_table
 
 def _generate_values_of_atom_(num_rows, num_for_change):
     count_value = 0
@@ -52,7 +51,6 @@ def _generate_values_of_atom_(num_rows, num_for_change):
 
 def _generate_values_of_formula_(formula, num_rows, atoms, truth_table):
     list_of_values = []
-    print(formula)
     for row in range(num_rows):
         for index in range(len(atoms)):
             index_atom = repr(atoms[index])
