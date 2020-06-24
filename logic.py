@@ -29,18 +29,11 @@ class Atom(Formula):
     @value.setter
     def value(self, value):
         self.value_atom = value
-        print("O valor da proposição '{}' foi setado para {}.".format(
-            repr(self),
-            value
-        ))
-
+        
     @value.deleter
     def value(self):
         self.value_atom = None
-        print("O valor da proposição '{} foi setado para None".format(
-            repr(self)
-        ))
-
+        
     @property
     def length(self):
         return 1
@@ -55,7 +48,7 @@ class Atom(Formula):
 
     @property
     def sub_formula(self):
-        return (repr(self))   
+        return (self)   
     
     @sub_formula.setter
     def sub_formula(self, sub_formula):
@@ -112,9 +105,11 @@ class NOT(Formula):
 
     @property
     def sub_formula(self):
-        set_of_formulas = list(self.__right.sub_formula)
-        set_of_formulas.append(repr(self))
-        return sorted(set(set_of_formulas))
+        set_of_formulas = (self.__right.sub_formula 
+                            if type(self.__right.sub_formula) == list 
+                            else [self.__right.sub_formula])
+        set_of_formulas.append(self)
+        return set_of_formulas
 
     @sub_formula.setter
     def sub_formula(self, sub_formula):
@@ -176,10 +171,14 @@ class AND(Formula):
 
     @property
     def sub_formula(self):
-        set_of_formulas = list(self.__left.sub_formula)
-        set_of_formulas += self.__right.sub_formula
-        set_of_formulas.append(repr(self))
-        return sorted(set(set_of_formulas))
+        set_of_formulas = (self.__left.sub_formula 
+                            if type(self.__left.sub_formula) == list 
+                            else [self.__left.sub_formula])
+        set_of_formulas += (self.__right.sub_formula 
+                            if type(self.__right.sub_formula) == list 
+                            else [self.__right.sub_formula])
+        set_of_formulas.append(self)
+        return set_of_formulas
 
     @sub_formula.setter
     def sub_formula(self, sub_formula):
@@ -240,10 +239,14 @@ class OR(Formula):
 
     @property
     def sub_formula(self):
-        set_of_formulas = list(self.__left.sub_formula)
-        set_of_formulas += self.__right.sub_formula
-        set_of_formulas.append(repr(self))
-        return sorted(set(set_of_formulas))
+        set_of_formulas = (self.__left.sub_formula 
+                            if type(self.__left.sub_formula) == list 
+                            else [self.__left.sub_formula])
+        set_of_formulas += (self.__right.sub_formula 
+                            if type(self.__right.sub_formula) == list 
+                            else [self.__right.sub_formula])
+        set_of_formulas.append(self)
+        return set_of_formulas
 
     @sub_formula.setter
     def sub_formula(self, sub_formula):
@@ -306,10 +309,14 @@ class THEN(Formula):
 
     @property
     def sub_formula(self):
-        set_of_formulas = list(self.__left.sub_formula)
-        set_of_formulas += self.__right.sub_formula
-        set_of_formulas.append(repr(self))
-        return sorted(set(set_of_formulas))
+        set_of_formulas = (self.__left.sub_formula 
+                            if type(self.__left.sub_formula) == list 
+                            else [self.__left.sub_formula])
+        set_of_formulas += (self.__right.sub_formula 
+                            if type(self.__right.sub_formula) == list 
+                            else [self.__right.sub_formula])
+        set_of_formulas.append(self)
+        return set_of_formulas
 
     @sub_formula.setter
     def sub_formula(self, sub_formula):
