@@ -9,51 +9,64 @@ from logic_utils import *
 from logic import *
 import collections
 
+def get_atoms(formula):
+    Utils.verified_propositions(formula)
+    return list(filter(lambda f: isinstance(f, Atom), formula.sub_formula))
+
+def get_formulas(formula, atoms):
+    Utils.verified_propositions(formula)
+    return list(filter(lambda f: f not in atoms, formula.sub_formula))
+
 def truth_table_generator(formula):
     Utils.verified_propositions(formula)
-    atoms = []
-    formulas = []
+    atoms = get_atoms(formula)
     truth_table = collections.OrderedDict()
-    for sub_formula in formula.sub_formula:
-        if isinstance(sub_formula, Atom):
-            atoms.append(sub_formula)
-        else:
-            formulas.append(sub_formula)
 
     num_rows = 2 ** len(atoms)
-    array_of_count_for_change = []
-
-    for count in range(len(atoms) - 1, -1, -1):
-        array_of_count_for_change += [2 ** count]
+    count_for_change = [2 ** (i - 1) for i in range(len(atoms), 0, -1)]
     
-    for index in range(len(atoms)):
-        index_atom = repr(atoms[index]) 
-        count_for_change = array_of_count_for_change[index]
-        truth_table[index_atom] = _generate_values_of_atom_(num_rows, count_for_change)
+    for index, atom in enumerate(atoms):
+        truth_table[repr(atom)] = (
+            _generate_values_of_atom_(num_rows, count_for_change[index])
+        )
 
-    for formula in formulas:
-        truth_table[repr(formula)] = _generate_values_of_formula_(formula, num_rows, atoms, truth_table)
+    for formula in get_formulas(formula, atoms):
+        truth_table[repr(formula)] = (
+            _generate_values_of_formula_(
+                formula,
+                num_rows,
+                atoms,
+                truth_table
+            )
+        )
 
     return truth_table
 
+def print_truth_table(truth_table):
+    if not truth_table:
+        print('Não existe formulas para printar essa tabela-verdade')
+
+    print(*list(truth_table.keys()), sep=" | ")
+
+    if truth_table.values():
+        num_rows = len(list(truth_table.values())[0])  
+    
+    for row in range(num_rows):
+        values = [key[row] for key in truth_table.values()]
+        print(*values, sep=" | ")
+
 def _generate_values_of_atom_(num_rows, num_for_change):
-    count_value = 0
     list_of_values = []
     value = True
-    for row in range(num_rows):
-        if count_value == num_for_change:
-            value = not value
-            count_value = 0
-
-        count_value += 1
-        list_of_values += [value]
+    for row in range(0, num_rows, num_for_change):
+        list_of_values[row:row+num_for_change] = [value] * num_for_change 
+        value = not value
     return list_of_values
 
 def _generate_values_of_formula_(formula, num_rows, atoms, truth_table):
     list_of_values = []
     for row in range(num_rows):
-        for index in range(len(atoms)):
-            index_atom = repr(atoms[index])
-            atoms[index].value = truth_table[index_atom][row]
-        list_of_values += [formula.value]
+        for atom in atoms:
+            atom.value = truth_table[repr(atom)][row]
+        list_of_values.append(formula.value)
     return list_of_values

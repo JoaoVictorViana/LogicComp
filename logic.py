@@ -133,7 +133,7 @@ class AND(Formula):
 
     def __str__(self):
         return "{} e {}".format(
-            self.__left,
+            str(self.__left),
             str(self.__right).lower()
         )
 
@@ -201,12 +201,12 @@ class OR(Formula):
 
     def __str__(self):
         return "{} ou {}".format(
-            self.__left,
+            str(self.__left),
             str(self.__right).lower()
         )
 
     def __repr__(self):
-        return "({} v {})".format(
+        return "({} \/ {})".format(
             repr(self.__left),
             repr(self.__right)
         )
@@ -267,8 +267,8 @@ class THEN(Formula):
         self.__right = right
 
     def __str__(self):
-        return "{} então {}".format(
-            self.__left,
+        return "Se {}, então {}".format(
+            str(self.__left).lower(),
             str(self.__right).lower()
         )
 
