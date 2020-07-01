@@ -5,8 +5,8 @@ Created: 24/06/2020
 '''
 
 ''' Functions of Logic '''
-from logic_utils import Utils, FormulaArgumentError
-from logic import Atom
+from logic.logic_utils import Utils, FormulaArgumentError
+from logic.logic import Atom
 import collections
 
 

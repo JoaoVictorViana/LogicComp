@@ -4,7 +4,7 @@ Project: Implementações da cadeira de lógica para Ciência da Computação
 Created: 25/04/2020
 '''
 
-from logic_utils import *
+from logic.logic_utils import *
 
 ''' Atom and Conectors'''
 class Atom(Formula):
