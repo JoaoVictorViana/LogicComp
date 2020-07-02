@@ -58,6 +58,11 @@ def logical_consequence(formula, premises):
     
     return is_logical_consequence, truth_table
 
+def satisfiability_checking(formula):
+    Utils.verified_propositions(formula)
+    truth_table = truth_table_generator(formula)
+    return True in truth_table[repr(formula)]
+
 def get_atoms(formula):
     Utils.verified_propositions(formula)
     return list(filter(lambda f: isinstance(f, Atom), formula.sub_formula))
