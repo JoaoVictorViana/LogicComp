@@ -109,7 +109,7 @@ class NOT(Formula):
                             if type(self.__right.sub_formula) == list 
                             else [self.__right.sub_formula])
         set_of_formulas.append(self)
-        return set_of_formulas
+        return list(set(set_of_formulas))
 
     @sub_formula.setter
     def sub_formula(self, sub_formula):
@@ -178,7 +178,7 @@ class AND(Formula):
                             if type(self.__right.sub_formula) == list 
                             else [self.__right.sub_formula])
         set_of_formulas.append(self)
-        return set_of_formulas
+        return list(set(set_of_formulas))
 
     @sub_formula.setter
     def sub_formula(self, sub_formula):
@@ -246,7 +246,7 @@ class OR(Formula):
                             if type(self.__right.sub_formula) == list 
                             else [self.__right.sub_formula])
         set_of_formulas.append(self)
-        return set_of_formulas
+        return list(set(set_of_formulas))
 
     @sub_formula.setter
     def sub_formula(self, sub_formula):
@@ -255,6 +255,7 @@ class OR(Formula):
     @sub_formula.deleter
     def sub_formula(self):
         print("Não é possivel deletar a sub-fórmula desta fórmula!")
+
 
 class THEN(Formula):
 
@@ -316,7 +317,7 @@ class THEN(Formula):
                             if type(self.__right.sub_formula) == list 
                             else [self.__right.sub_formula])
         set_of_formulas.append(self)
-        return set_of_formulas
+        return list(set(set_of_formulas))
 
     @sub_formula.setter
     def sub_formula(self, sub_formula):
@@ -326,5 +327,70 @@ class THEN(Formula):
     def sub_formula(self):
         print("Não é possivel deletar a sub-fórmula desta fórmula!")
 
+class BICONDITIONAL(Formula):
 
+    __slots__ = ['__left', '__right']
+
+    def __init__(self, left:Formula, right:Formula):
+        Utils.verified_propositions(left)
+        Utils.verified_propositions(right)
+        self.__left = left 
+        self.__right = right
+
+    def __str__(self):
+        return "Se {} e somente se {}".format(
+            str(self.__left).lower(),
+            str(self.__right).lower()
+        )
+
+    def __repr__(self):
+        return "({} <-> {})".format(
+            repr(self.__left),
+            repr(self.__right)
+        )
+
+    @property
+    def value(self): 
+        if self.__left.value == None or self.__right.value == None:
+            return 'O valor de algum átomo não foi setado'
+        return self.__left.value == self.__right.value
+
+    @value.setter
+    def value(self, value):
+        print("Não é possivel alterar o valor lógico desta fórmula!")
+    
+    @value.deleter
+    def value(self):
+        print("Não é possivel deletar o valor lógico desta fórmula!")
+
+    @property
+    def length(self):
+        return self.__left.length + self.__right.length + 1
+
+    @length.setter
+    def length(self, length):
+        print("Não é possivel alterar o tamanho desta fórmula!")
+    
+    @length.deleter
+    def length(self):
+        print("Não é possivel deletar o tamanho desta fórmula!")
+
+    @property
+    def sub_formula(self):
+        set_of_formulas = (self.__left.sub_formula 
+                            if type(self.__left.sub_formula) == list 
+                            else [self.__left.sub_formula])
+        set_of_formulas += (self.__right.sub_formula 
+                            if type(self.__right.sub_formula) == list 
+                            else [self.__right.sub_formula])
+        set_of_formulas.append(self)
+        return list(set(set_of_formulas))
+
+    @sub_formula.setter
+    def sub_formula(self, sub_formula):
+        print("Não é possivel alterar a sub-fórmula desta fórmula!")
+
+    @sub_formula.deleter
+    def sub_formula(self):
+        print("Não é possivel deletar a sub-fórmula desta fórmula!")
 
