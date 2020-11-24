@@ -203,7 +203,7 @@ class OR(Formula):
         )
 
     def __repr__(self):
-        return "({} \/ {})".format(
+        return "({} v {})".format(
             repr(self.__left),
             repr(self.__right)
         )

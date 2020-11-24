@@ -87,3 +87,6 @@ def _generate_values_of_formula_(formula, num_rows, atoms, truth_table):
             atom.value = truth_table[repr(atom)][row]
         list_of_values.append(formula.value)
     return list_of_values
+
+def count_conec(formula):
+    return len(get_formulas(formula, get_atoms(formula)))
