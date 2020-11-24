@@ -25,7 +25,10 @@ def satisfiability_checking(formula):
 
 def get_atoms(formula):
     Utils.verified_propositions(formula)
-    return list(filter(lambda f: isinstance(f, Atom), formula.sub_formula))
+    return sorted(
+        filter(lambda f: isinstance(f, Atom), formula.sub_formula),
+        key=repr
+    )
 
 def get_formulas(formula, atoms):
     Utils.verified_propositions(formula)

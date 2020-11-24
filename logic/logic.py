@@ -5,6 +5,7 @@ Created: 25/04/2020
 '''
 
 from logic.logic_utils import *
+from collections import OrderedDict
 
 ''' Atom and Conectors'''
 class Atom(Formula):
@@ -48,7 +49,7 @@ class Atom(Formula):
 
     @property
     def sub_formula(self):
-        return (self)   
+        return [self]   
     
     @sub_formula.setter
     def sub_formula(self, sub_formula):
@@ -105,11 +106,10 @@ class NOT(Formula):
 
     @property
     def sub_formula(self):
-        set_of_formulas = (self.__right.sub_formula 
-                            if type(self.__right.sub_formula) == list 
-                            else [self.__right.sub_formula])
-        set_of_formulas.append(self)
-        return list(set(set_of_formulas))
+        set_of_formulas = OrderedDict()
+        set_of_formulas.update({'values' : self.__right.sub_formula})
+        set_of_formulas['values'] += [self]
+        return list(set_of_formulas['values'])
 
     @sub_formula.setter
     def sub_formula(self, sub_formula):
@@ -171,14 +171,11 @@ class AND(Formula):
 
     @property
     def sub_formula(self):
-        set_of_formulas = (self.__left.sub_formula 
-                            if type(self.__left.sub_formula) == list 
-                            else [self.__left.sub_formula])
-        set_of_formulas += (self.__right.sub_formula 
-                            if type(self.__right.sub_formula) == list 
-                            else [self.__right.sub_formula])
-        set_of_formulas.append(self)
-        return list(set(set_of_formulas))
+        set_of_formulas = OrderedDict()
+        set_of_formulas.update({'values' : self.__left.sub_formula})
+        set_of_formulas['values'] += self.__right.sub_formula
+        set_of_formulas['values'] += [self]
+        return list(set_of_formulas['values'])
 
     @sub_formula.setter
     def sub_formula(self, sub_formula):
@@ -239,14 +236,11 @@ class OR(Formula):
 
     @property
     def sub_formula(self):
-        set_of_formulas = (self.__left.sub_formula 
-                            if type(self.__left.sub_formula) == list 
-                            else [self.__left.sub_formula])
-        set_of_formulas += (self.__right.sub_formula 
-                            if type(self.__right.sub_formula) == list 
-                            else [self.__right.sub_formula])
-        set_of_formulas.append(self)
-        return list(set(set_of_formulas))
+        set_of_formulas = OrderedDict()
+        set_of_formulas.update({'values' : self.__left.sub_formula})
+        set_of_formulas['values'] += self.__right.sub_formula
+        set_of_formulas['values'] += [self]
+        return list(set_of_formulas['values'])
 
     @sub_formula.setter
     def sub_formula(self, sub_formula):
@@ -310,14 +304,11 @@ class THEN(Formula):
 
     @property
     def sub_formula(self):
-        set_of_formulas = (self.__left.sub_formula 
-                            if type(self.__left.sub_formula) == list 
-                            else [self.__left.sub_formula])
-        set_of_formulas += (self.__right.sub_formula 
-                            if type(self.__right.sub_formula) == list 
-                            else [self.__right.sub_formula])
-        set_of_formulas.append(self)
-        return list(set(set_of_formulas))
+        set_of_formulas = OrderedDict()
+        set_of_formulas.update({'values' : self.__left.sub_formula})
+        set_of_formulas['values'] += self.__right.sub_formula
+        set_of_formulas['values'] += [self]
+        return list(set_of_formulas['values'])
 
     @sub_formula.setter
     def sub_formula(self, sub_formula):
@@ -377,14 +368,11 @@ class BICONDITIONAL(Formula):
 
     @property
     def sub_formula(self):
-        set_of_formulas = (self.__left.sub_formula 
-                            if type(self.__left.sub_formula) == list 
-                            else [self.__left.sub_formula])
-        set_of_formulas += (self.__right.sub_formula 
-                            if type(self.__right.sub_formula) == list 
-                            else [self.__right.sub_formula])
-        set_of_formulas.append(self)
-        return list(set(set_of_formulas))
+        set_of_formulas = OrderedDict()
+        set_of_formulas.update({'values' : self.__left.sub_formula})
+        set_of_formulas['values'] += self.__right.sub_formula
+        set_of_formulas['values'] += [self]
+        return list(set_of_formulas['values'])
 
     @sub_formula.setter
     def sub_formula(self, sub_formula):
@@ -393,4 +381,3 @@ class BICONDITIONAL(Formula):
     @sub_formula.deleter
     def sub_formula(self):
         print("Não é possivel deletar a sub-fórmula desta fórmula!")
-
